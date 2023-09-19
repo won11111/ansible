@@ -1,0 +1,40 @@
+---
+- name: 웹 서버 구성 
+  hosts: webservers
+  gather_facts: yes
+  tasks: 
+    # 1. 패키지 설치  - httpd, firewalld
+  - name: 패키지 설피 - htppd, firewall
+    yum:
+      name:
+        - httpd
+        - firewalld
+      state: latest
+
+    # 2. 서비스 설정 - /var/www/html/hello.html
+  - name: 서비스 설정 - /var/www/html/hello.html
+    template:
+      src: templates/hosts.j2
+      dest: /var/www/html/hello.html
+    
+    # 3. 서비스 기동 - httpd, firewalld
+  - name: 서비스 기동
+    service:
+      name: "{{ item }}"
+      state: started
+      enabled: yes
+    loop:
+      - firewalld
+      - httpd
+
+    # 4. 방화벽 서비스 포트 등록  - http, https
+  - name: 방화벽 서비스 포트 등록
+    firewalld: 
+      service: "{{ item }}"
+      permanent: true
+      state: enabled
+      immediate: yes
+    loop:
+      - http
+      - https
+

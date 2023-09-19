@@ -1,0 +1,8 @@
+---
+- name: 1st play
+  import_playbook:  /home/ansible/project/packages.yml
+- name: 2nd play
+  import_playbook: /home/ansible/project/time_sync.yml
+- name: 3rd play
+  import_playbook: /home/ansible/project/webservers.yml
+

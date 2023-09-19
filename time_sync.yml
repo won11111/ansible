@@ -1,0 +1,16 @@
+---
+- name: 시간 동기화
+  hosts: all
+  vars:
+    timesync_ntp_servers:
+      - hostname: time.bora.net
+        iburst: true
+  tasks: 
+    - name: 타임존 설정
+      timezone: 
+        name: Asia/Seoul
+  roles:
+    - rhel-system-roles.timesync
+  
+
+
